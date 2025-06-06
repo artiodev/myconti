@@ -6,3 +6,4 @@ Pipfile.lock
 .idea/MyConti.iml
 *.xml
 .idea
+*.pyc
