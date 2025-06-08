@@ -25,16 +25,16 @@ def getTotal(fulldf, month):
             continue
 
         # Calcolo stipendio e contributo prima di classificare
-        if myDF['ZTotaleB1'] == 0 and myDF['Stipendio'] > 0 and myDF['ContributoDile'] > 0:
-            myDF['ZTotaleB1'] = myDF['Stipendio'] + myDF['ContributoDile']
+        if myDF['ZTotaleB1'] == 0 and myDF['Stipendio'] > 0 and myDF['Contributo'] > 0:
+            myDF['ZTotaleB1'] = myDF['Stipendio'] + myDF['Contributo']
 
         matched = False
         for categoria, descrizioni in categories.items():
             if any(keyword in descrizione for keyword in descrizioni):
                 if categoria == 'Stipendio':
                     myDF['Stipendio'] += float(row["Importo"])
-                elif categoria == 'ContributoDile':
-                    myDF['ContributoDile'] += float(row["Importo"])
+                elif categoria == 'Contributo':
+                    myDF['Contributo'] += float(row["Importo"])
                 else:
                     myDF = calculateTotal(myDF, totalDf, row, categoria)
                 matched = True

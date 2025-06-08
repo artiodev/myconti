@@ -65,7 +65,7 @@ categories = {
     'Assicurazione': ['Assicurazione'],
     'Auto': ['MELONI AUTO CENTRO RE NOVELLARA'],
     'Stipendio': ['EMOLUMENTI'],
-    'ContributoDile': ["BONIFICO A CREDITO ORDINATO DA ARTIOLI ROBERTO PIRONDI PAOLA"]
+    'Contributo': ["BONIFICO A CREDITO ORDINATO DA ARTIOLI ROBERTO PIRONDI PAOLA"]
 }
 
 totalDf = {
@@ -95,7 +95,7 @@ totalDf = {
         'Assicurazione': 'Necessarie',
         'Stipendio': 'Stipendio',
         'Prelievo': 'StileVita',
-        'ContributoDile': 'SussidioDile',
+        'Contributo': 'Contributo',
         'ZTotaleB1': 'ZStipendio',
         'ZTotaleB2': 'Necessarie',
         'ZTotaleB4': 'StileVita',
