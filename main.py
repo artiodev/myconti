@@ -5,9 +5,9 @@ from costants import categories, totalDf
 
 def calculateTotal(myDF, totalDf, row, categoria):
     myDF[categoria] += float(row["Importo"])
-    if totalDf[categoria] == 'Necessarie':
+    if totalDf[categoria] == 'UsciteNecessarie':
         myDF['ZTotaleB2'] = myDF['ZTotaleB2'] + float(row["Importo"])
-    elif totalDf[categoria] == 'StileVita':
+    elif totalDf[categoria] == 'UsciteStileVita':
         myDF['ZTotaleB4'] = myDF['ZTotaleB4'] + float(row["Importo"])
     return myDF
 
@@ -25,16 +25,16 @@ def getTotal(fulldf, month):
             continue
 
         # Calcolo stipendio e contributo prima di classificare
-        if myDF['ZTotaleB1'] == 0 and myDF['Stipendio'] > 0 and myDF['Contributo'] > 0:
-            myDF['ZTotaleB1'] = myDF['Stipendio'] + myDF['Contributo']
+        if myDF['ZTotaleB1'] == 0 and myDF['Stipendio'] > 0 and myDF['AltreEntrate'] > 0:
+            myDF['ZTotaleB1'] = myDF['Stipendio'] + myDF['AltreEntrate']
 
         matched = False
         for categoria, descrizioni in categories.items():
             if any(keyword in descrizione for keyword in descrizioni):
                 if categoria == 'Stipendio':
                     myDF['Stipendio'] += float(row["Importo"])
-                elif categoria == 'Contributo':
-                    myDF['Contributo'] += float(row["Importo"])
+                elif categoria == 'AltreEntrate':
+                    myDF['AltreEntrate'] += float(row["Importo"])
                 else:
                     myDF = calculateTotal(myDF, totalDf, row, categoria)
                 matched = True
@@ -51,10 +51,10 @@ def getTotal(fulldf, month):
     TotaleB2 = myDF.loc[myDF['Categoria'] == "ZTotaleB2", 'Importo'].iloc[0]
     TotaleB4 = myDF.loc[myDF['Categoria'] == "ZTotaleB4", 'Importo'].iloc[0]
 
-    percSuEntrateNecessarieRow = pd.Series({"Tipo entrata/uscita": "Necessarie", "Categoria": "Percentuale su Entrate",
+    percSuEntrateNecessarieRow = pd.Series({"Tipo entrata/uscita": "UsciteNecessarie", "Categoria": "Percentuale su Entrate",
                                             "Importo": (100 * TotaleB2) / TotaleB1})
     percSuEntrateStileRow = pd.Series(
-        {"Tipo entrata/uscita": "StileVita", "Categoria": "Percentuale su Entrate",
+        {"Tipo entrata/uscita": "UsciteStileVita", "Categoria": "Percentuale su Entrate",
          "Importo": (100 * TotaleB4) / TotaleB1})
 
     myDF = myDF.sort_values(['Tipo entrata/uscita', 'Categoria'])
