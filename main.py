@@ -1,6 +1,6 @@
 import pandas as pd
 import glob
-from costants import categories, totalDf
+from costants import categories, totalDf,patternToExcludeConto,patternToExcludeCarta
 
 
 def calculateTotal(myDF, totalDf, row, categoria):
@@ -90,9 +90,7 @@ def loadFile(csv_files, carta_files, paypal_files):
     df_list = (pd.read_csv(file, delimiter=';') for file in csv_files)
     big_df = pd.concat(df_list, ignore_index=True)
     big_df.rename(columns={'Descrizione:': 'Descrizione'}, inplace=True)
-    # Remove PAYPAL and Ricariche
-    patternToExlude = r'(RICARICA|Ricarica|Investimenti|ADDEBITO MESE CARTA EGO)'
-    big_df = big_df[~big_df['Descrizione'].str.contains(patternToExlude)]
+    big_df = big_df[~big_df['Descrizione'].str.contains(patternToExcludeConto)]
 
     big_df["Importo"] = big_df["Importo"].str.strip().str.replace(".", "")
     big_df["Importo"] = big_df["Importo"].str.strip().str.replace(",00", "")
@@ -103,9 +101,7 @@ def loadFile(csv_files, carta_files, paypal_files):
     # Carta Prepagata
     carta_list = (pd.read_csv(file, delimiter=';') for file in carta_files)
     cartaDF = pd.concat(carta_list, ignore_index=True)
-    # Remove PAYPAL and Ricariche
-    patternToExlude = r'(PAYPAL|Ricarica|Investimenti)'
-    cartaDF = cartaDF[~cartaDF['Descrizione'].str.contains(patternToExlude)]
+    cartaDF = cartaDF[~cartaDF['Descrizione'].str.contains(patternToExcludeCarta)]
 
     cartaDF["Importo"] = cartaDF["Importo"].str.strip().str.replace(".", "")
     cartaDF["Importo"] = cartaDF["Importo"].str.strip().str.replace(",00", "")
