@@ -157,9 +157,9 @@ def get_excel_column_letter(n):
 
 if __name__ == '__main__':
     year = '2025'
-    csv_files = glob.glob('files' + "/" + year + "/*.csv")
-    carta_files = glob.glob('carta' + "/" + year + "/*.csv")
-    paypal_files = glob.glob('paypal' + "/" + year + "/*.CSV")
+    csv_files = glob.glob('ContoCorrente' + "/" + year + "/*.csv")
+    carta_files = glob.glob('CartaPrepagata' + "/" + year + "/*.csv")
+    paypal_files = glob.glob('CartaPaypal' + "/" + year + "/*.CSV")
     df = loadFile(csv_files, carta_files, paypal_files)
     output_file = 'output.xlsx'
 
